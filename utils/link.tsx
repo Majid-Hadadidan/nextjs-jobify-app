@@ -21,7 +21,7 @@ const links: NavLink[] = [
   {
     href: '/stats',
     label: 'stats',
-    icon: <AreaChart className='!w-6 !h-6 translate-x-[-8px]' />,
+    icon: <AreaChart className='!w-6 !h-6 ' />,
   },
 ];
 
