@@ -1027,7 +1027,7 @@ import { CustomFormField, CustomFormSelect } from "./FormComponents";
 
 function CreateJobForm() {
   // 1. Define your form.
-  const form = useForm<CreateAndEditJobType>({
+ ~ const form = useForm<CreateAndEditJobType>({
     resolver: zodResolver(createAndEditJobSchema),
     defaultValues: {
       position: "",
