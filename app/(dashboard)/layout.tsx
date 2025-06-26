@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
-import Logo from "@/assets/logo.svg";
-import links from "@/utils/link";
+// import Logo from "@/assets/logo.svg";
+// import links from "@/utils/link";
 import NavBar from "@/components/NavBar";
 import SideBar from "@/components/SideBar";
 export const metadata: Metadata = {
