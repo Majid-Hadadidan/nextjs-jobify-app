@@ -20,6 +20,7 @@ function SearchContainer() {
 
   const router = useRouter();
   const pathname = usePathname();
+  //when we submit the form ,move to the handleSubmit and query params add to URL
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const params = new URLSearchParams();
