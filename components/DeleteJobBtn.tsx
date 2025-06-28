@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deletJobAction } from "@/utils/actions";
+import { deleteJobAction } from "@/utils/actions";
 import { Button } from "./ui/button";
 import { toast } from "sonner";
 
@@ -7,7 +7,7 @@ function DeleteJobBtn({ id }: { id: string }) {
   const queryClient = useQueryClient();
 
   const { isPending, mutate } = useMutation({
-    mutationFn: (id: string) => deletJobAction(id),
+    mutationFn: (id: string) => deleteJobAction(id),
     onSuccess: (data) => {
       if (!data) {
         toast("There wasa an error");

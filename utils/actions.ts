@@ -106,3 +106,48 @@ export async function deleteJobAction(id: string): Promise<JobType | null> {
     return null;
   }
 }
+
+//The two functions below are for editing the form on the jobs page.
+export async function getSingleJobAction(id: string): Promise<JobType | null> {
+  let job: JobType | null = null;
+  const userId = await authenticateAndRedirect();
+
+  try {
+    job = await prisma.job.findUnique({
+      where: {
+        id,
+        clerkId: userId,
+      },
+    });
+  } catch (error) {
+    console.log(error);
+    job = null;
+  }
+  if (!job) {
+    redirect("/jobs");
+  }
+  return job;
+}
+
+export async function updateJobAction(
+  id: string,
+  values: CreateAndEditJobType
+): Promise<JobType | null> {
+  const userId = await authenticateAndRedirect();
+
+  try {
+    const job: JobType = await prisma.job.update({
+      where: {
+        id,
+        clerkId: userId,
+      },
+      data: {
+        ...values,
+      },
+    });
+    return job;
+  } catch (error) {
+    console.log(error);
+    return null;
+  }
+}
