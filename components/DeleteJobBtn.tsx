@@ -5,23 +5,28 @@ import { toast } from "sonner";
 
 function DeleteJobBtn({ id }: { id: string }) {
   const queryClient = useQueryClient();
-
-  const { isPending, mutate } = useMutation({
+  const { mutate, isPending } = useMutation({
     mutationFn: (id: string) => deleteJobAction(id),
     onSuccess: (data) => {
       if (!data) {
-        toast("There wasa an error");
+        toast("there was an error");
+        return;
       }
-      return;
+      queryClient.invalidateQueries({ queryKey: ["jobs"] });
+      queryClient.invalidateQueries({ queryKey: ["stats"] });
+      queryClient.invalidateQueries({ queryKey: ["charts"] });
+
+      toast("job removed");
     },
   });
-  queryClient.invalidateQueries({ queryKey: ["jobs"] });
-  queryClient.invalidateQueries({ queryKey: ["stats"] });
-  queryClient.invalidateQueries({ queryKey: ["charts"] });
-  toast("job remove");
-
   return (
-    <Button size='sm' disabled={isPending} onClick={() => mutate(id)}>
+    <Button
+      size="sm"
+      disabled={isPending}
+      onClick={() => {
+        mutate(id);
+      }}
+    >
       {isPending ? "deleting..." : "delete"}
     </Button>
   );
