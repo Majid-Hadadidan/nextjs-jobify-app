@@ -181,7 +181,6 @@ export async function getStatsAction(): Promise<{
       interview: 0,
       ...statsObject,
     };
-      console.log(defaultStats)
 
     return defaultStats;
   } catch (error) {
