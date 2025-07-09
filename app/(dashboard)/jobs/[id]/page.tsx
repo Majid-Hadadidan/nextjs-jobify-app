@@ -7,7 +7,11 @@ import {
   QueryClient,
 } from "@tanstack/react-query";
 
-export default async function JobDetailPage({ params }: { params: { id: string } }) {
+
+type Props = {
+  params: { id: string };
+};
+export default async function JobDetailPage({ params }:Props) {
   const queryClient = new QueryClient();
 
   const jobId = params?.id;
