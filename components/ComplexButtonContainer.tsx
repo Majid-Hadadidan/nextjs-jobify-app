@@ -37,6 +37,7 @@ function ComplexButtonContainer({ currentPage, totalPages }: ButtonContainerProp
         size="icon"
         variant={activeClass ? "default" : "outline"}
         onClick={() => handlePageChange(page)}
+        className="cursor-pointer"
       >
         {page}
       </Button>
@@ -106,7 +107,7 @@ function ComplexButtonContainer({ currentPage, totalPages }: ButtonContainerProp
     <div className="flex  gap-x-2">
       {/* prev */}
       <Button
-        className="flex items-center gap-x-2 "
+        className="flex items-center gap-x-2 cursor-pointer"
         variant="outline"
         onClick={() => {
           let prevPage = currentPage - 1;
@@ -120,7 +121,7 @@ function ComplexButtonContainer({ currentPage, totalPages }: ButtonContainerProp
       {renderPageButtons()}
       {/* next */}
       <Button
-        className="flex items-center gap-x-2 "
+        className="flex items-center gap-x-2 cursor-pointer"
         onClick={() => {
           let nextPage = currentPage + 1;
           if (nextPage > totalPages) nextPage = 1;
