@@ -75,13 +75,23 @@ export async function getAllJobAction({
         status: jobStatus,
       };
     }
+    const skip = (page - 1) * limit;
     const jobs: JobType[] = await prisma.job.findMany({
       where: whereClause,
+      skip: skip,
+      take: limit,
       orderBy: {
         createdAt: "desc",
       },
     });
-    return { jobs, count: 0, page: 1, totalPages: 0 };
+
+    const count = await prisma.job.count({
+      where: whereClause,
+    });
+
+    //totalPage=ceil(25/10)==>3 total page
+    const totalPages=Math.ceil(count/limit);
+    return { jobs, count, page, totalPages };
   } catch (error) {
     console.error(error);
     return { jobs: [], count: 0, page: 1, totalPages: 0 };
@@ -192,7 +202,7 @@ export async function getStatsAction(): Promise<{
 export async function getChartsDataAction(): Promise<
   Array<{ date: string; count: number }>
 > {
-  const userId =await authenticateAndRedirect();
+  const userId = await authenticateAndRedirect();
   const sixMonthsAgo = dayjs().subtract(6, "month").toDate();
   try {
     const jobs = await prisma.job.findMany({
@@ -222,7 +232,7 @@ export async function getChartsDataAction(): Promise<
     }, [] as Array<{ date: string; count: number }>);
     return applicationsPerMonth;
   } catch (error) {
-    console.log(error)
+    console.log(error);
     redirect("/jobs");
   }
 }
