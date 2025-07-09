@@ -12,10 +12,9 @@ type Props = {
   params: { id: string };
 };
 export default async function JobDetailPage({ params }:Props) {
+  const jobId = params.id
+
   const queryClient = new QueryClient();
-
-  const jobId = params?.id;
-
   if (!jobId) {
     throw new Error("Job ID not found in params");
   }
