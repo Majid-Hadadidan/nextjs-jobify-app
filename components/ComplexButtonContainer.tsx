@@ -54,7 +54,7 @@ function ComplexButtonContainer({ currentPage, totalPages }: ButtonContainerProp
 
     if (currentPage > 3) {
       pageButtons.push(
-        <Button size="icon" variant="outline" key="dots-1">
+        <Button size="icon" variant="outline" key="dots-left">
           ...
         </Button>
       );
@@ -89,7 +89,7 @@ function ComplexButtonContainer({ currentPage, totalPages }: ButtonContainerProp
     }
     if (currentPage < totalPages - 2) {
       pageButtons.push(
-        <Button size="icon" variant="outline" key="dots-1">
+        <Button size="icon" variant="outline" key="ots-right">
           ...
         </Button>
       );
