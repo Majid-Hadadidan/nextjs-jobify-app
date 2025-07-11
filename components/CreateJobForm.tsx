@@ -16,7 +16,7 @@ import { Form } from "@/components/ui/form";
 
 import { CustomFormField, CustomFormSelect } from "./FormComponents";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createJobAction } from "@/utils/actions";
+// import { createJobAction } from "@/utils/actions";
 import { useRouter } from "next/navigation";
 
 function CreateJobForm() {
@@ -34,21 +34,36 @@ function CreateJobForm() {
 
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { mutate, isPending } = useMutation({
-    mutationFn: (values: CreateAndEditJobType) => createJobAction(values),
-    onSuccess: (data) => {
-      if (!data) {
-        toast("there was en error");
-        return;
-      }
-      toast("job created");
-      queryClient.invalidateQueries({ queryKey: ["jobs"] });
-      queryClient.invalidateQueries({ queryKey: ["stats"] });
-      queryClient.invalidateQueries({ queryKey: ["charts"] });
+ const { mutate, isPending } = useMutation({
+  mutationFn: async (values: CreateAndEditJobType) => {
+    const res = await fetch("/api", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
 
-      router.push("/jobs");
-    },
-  });
+    const data = await res.json();
+
+    if (!res.ok) {
+      throw new Error(data.error || "Something went wrong");
+    }
+
+    return data;
+  },
+
+  onSuccess: () => {
+    toast("job created");
+    queryClient.invalidateQueries({ queryKey: ["jobs"] });
+    router.push("/jobs");
+  },
+
+  onError: () => {
+    toast("there was an error");
+  },
+});
+
   function onSubmit(values: CreateAndEditJobType) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.

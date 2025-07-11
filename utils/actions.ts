@@ -5,7 +5,7 @@ import { JobType, CreateAndEditJobType, createAndEditJobSchema } from "./types";
 import { redirect } from "next/navigation";
 import { Prisma } from "@/lib/generated/prisma";
 import dayjs from "dayjs";
-async function authenticateAndRedirect(): Promise<string> {
+export async function authenticateAndRedirect(): Promise<string> {
   const { userId } = await auth();
 
   if (!userId) {
@@ -17,6 +17,7 @@ async function authenticateAndRedirect(): Promise<string> {
 export async function createJobAction(
   values: CreateAndEditJobType
 ): Promise<JobType | null> {
+  'use server'
   await new Promise((resolve) => setTimeout(resolve, 3000));
   const userId = await authenticateAndRedirect();
   try {
