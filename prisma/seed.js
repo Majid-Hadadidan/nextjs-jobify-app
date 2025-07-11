@@ -1,7 +1,6 @@
-/* eslint-disable @typescript-eslint/no-require-imports */
+import { PrismaClient } from "../lib/generated/prisma";
+import data from "./mock-date.json";
 
-const { PrismaClient } = require("../lib/generated/prisma");
-const data = require("./mock-date.json");
 const prisma = new PrismaClient();
 
 async function main() {
@@ -12,12 +11,14 @@ async function main() {
       clerkId,
     };
   });
+
   for (const job of jobs) {
     await prisma.job.create({
       data: job,
     });
   }
 }
+
 main()
   .then(async () => {
     await prisma.$disconnect();
